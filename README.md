@@ -24,7 +24,7 @@ datasource-proxy <br/>
 Docker <br/>
 <br/>
 
-### Install Kafka for Windows 10
+### Install Kafka on Windows 10
 
 1-) Download the latest Kafka release and extract it into "D:\DEV\kafka_2.13-3.3.1" directory :
 
