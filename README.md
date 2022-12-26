@@ -3,6 +3,7 @@
 Purpose : <br/>
 1- Send message to Kafka broker topic from kafka-producer-rest-api via kafka-template <br/>
 2- Read message from Kafka broker topic to kafka-consumer-rest-api <br/>
+3- Increase decoupling between microservices.
 
 ![kafka-producer-consumer](doc/kafka-producer-consumer.png) <br/>
 
