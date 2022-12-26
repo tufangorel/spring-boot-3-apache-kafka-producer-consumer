@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property resource="application.properties" />
+    <springProperty scope="context" name="springAppName" source="spring.application.name"/>
+    <property name="CONSOLE_LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p [${springAppName},%X{X-B3-TraceId:-}] %m%n"/>
+
+    <appender name="ConsoleAppender"
+              class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>
+                    %date{ISO8601} %highlight(%-5level) %magenta(%thread) %cyan(%logger.%M): %message %X{X-B3-TraceId} %X{X-B3-SpanId} %n%throwable
+                </pattern>
+        </layout>
+    </appender>
+
+    <!-- LOG at INFO level when no spring profile is provided -->
+    <root level="INFO">
+        <appender-ref ref="ConsoleAppender" />
+    </root>
+
+    <appender name="HIKARI" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${server.tomcat.basedir}/hikari/hikari.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>[%d{dd-MMM-yyyy HH:mm:ss.SSS}] [%logger] [%-5level] - %msg%n</Pattern>
+            <charset>utf8</charset>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${server.tomcat.basedir}/hikari/hikari_%d{yyyy-MM-dd}.log
+            </fileNamePattern>
+            <maxHistory>20</maxHistory>
+            <totalSizeCap>1MB</totalSizeCap>
+        </rollingPolicy>
+
+    </appender>
+
+    <logger name="com.zaxxer.hikari" level="ALL" additivity="false">
+        <appender-ref ref="HIKARI" />
+        <appender-ref ref="ConsoleAppender" />
+    </logger>
+
+    <springProfile name="dev">
+        <!-- Use shutdownHook so that we can close gracefully and finish the log drain -->
+        <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
+        <root level="TRACE">
+            <appender-ref ref="ConsoleAppender"/>
+        </root>
+        <!-- LOG triggered SQL statements -->
+        <logger name="org.hibernate.SQL" level="debug" additivity="false">
+            <appender-ref ref="ConsoleAppender" />
+        </logger>
+
+        <!-- LOG Binding and Extracted Parameters -->
+        <logger name="org.hibernate.type.descriptor.sql" level="trace" additivity="false">
+            <appender-ref ref="ConsoleAppender" />
+        </logger>
+
+        <logger name="com.zaxxer.hikari" level="debug" additivity="false">
+            <appender-ref ref="ConsoleAppender" />
+        </logger>
+
+        <logger name="org.springframework.jdbc.core.JdbcTemplate" level="debug" additivity="false">
+            <appender-ref ref="ConsoleAppender" />
+        </logger>
+
+        <logger name="org.springframework.jdbc.core.StatementCreatorUtils" level="debug" additivity="false">
+            <appender-ref ref="ConsoleAppender" />
+        </logger>
+
+    </springProfile>
+    <springProfile name="test">
+        <!-- Use shutdownHook so that we can close gracefully and finish the log drain -->
+        <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
+        <root level="DEBUG">
+            <appender-ref ref="ConsoleAppender"/>
+        </root>
+        <logger name="org.hibernate" level="INFO" additivity="false">
+            <appender-ref ref="ConsoleAppender" />
+        </logger>
+        <logger name="org.springframework" level="INFO" additivity="false">
+            <appender-ref ref="ConsoleAppender" />
+        </logger>
+        <logger name="com.zaxxer.hikari" level="INFO" additivity="false">
+            <appender-ref ref="ConsoleAppender" />
+        </logger>
+    </springProfile>
+    <springProfile name="prod">
+        <!-- Use shutdownHook so that we can close gracefully and finish the log drain -->
+        <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
+        <root level="INFO">
+            <appender-ref ref="ConsoleAppender"/>
+        </root>
+        <logger name="org.hibernate" level="WARN" additivity="false">
+            <appender-ref ref="ConsoleAppender" />
+        </logger>
+        <logger name="org.springframework" level="WARN" additivity="false">
+            <appender-ref ref="ConsoleAppender" />
+        </logger>
+        <logger name="com.zaxxer.hikari" level="WARN" additivity="false">
+            <appender-ref ref="ConsoleAppender" />
+        </logger>
+    </springProfile>
+
+</configuration>
