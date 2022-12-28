@@ -80,3 +80,10 @@ D:\DEV\kafka_2.13-3.3.1\bin\windows>.\kafka-console-consumer.bat --topic orders 
 apple
 orange
 </pre>
+
+Note : In case of LEADER_NOT_AVAILABLE error add hostname and port into "kafka_2.13-3.3.1\config\server.properties" file.
+<pre>
+listeners=PLAINTEXT://localhost:9092
+</pre>
+[2022-12-28 23:32:23,019] WARN [Producer clientId=console-producer] Error while fetching metadata with correlation id 23 : {orders=LEADER_NOT_AVAILABLE} </br>
+(org.apache.kafka.clients.NetworkClient) </br>
