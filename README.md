@@ -20,7 +20,9 @@ hibernate <br/>
 logback <br/>
 maven <br/>
 maven-surefire-plugin <br/>
-springfox-swagger-ui <br/>
+springfox-core <br/>
+springfox-spring-web  <br/>
+springdoc openAPI starter webMVC UI <br/>
 datasource-proxy <br/>
 Docker <br/>
 <br/>
