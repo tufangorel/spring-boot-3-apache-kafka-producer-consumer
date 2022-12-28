@@ -81,7 +81,7 @@ apple
 orange
 </pre>
 
-Note : In case of LEADER_NOT_AVAILABLE error add hostname and port into "kafka_2.13-3.3.1\config\server.properties" file.
+Note : In case of LEADER_NOT_AVAILABLE error add hostname and port into "\config\server.properties" file.
 <pre>
 listeners=PLAINTEXT://localhost:9092
 </pre>
