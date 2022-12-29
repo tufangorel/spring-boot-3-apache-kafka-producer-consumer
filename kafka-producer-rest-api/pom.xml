@@ -22,6 +22,7 @@
         <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
         <skip.unit.tests>true</skip.unit.tests>
         <springfox-core.version>3.0.0</springfox-core.version>
+        <io.github.classgraph.classgraph.version>4.8.153</io.github.classgraph.classgraph.version>
     </properties>
 
     <dependencies>
@@ -57,6 +58,11 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.classgraph</groupId>
+            <artifactId>classgraph</artifactId>
+            <version>${io.github.classgraph.classgraph.version}</version>
         </dependency>
 
         <dependency>
