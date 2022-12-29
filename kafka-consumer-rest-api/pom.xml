@@ -17,9 +17,11 @@
         <mockito-inline.version>4.3.1</mockito-inline.version>
         <HikariCP.version>5.0.1</HikariCP.version>
         <h2.version>2.1.210</h2.version>
-        <springdoc-openapi-ui.version>1.6.14</springdoc-openapi-ui.version>
+        <springdoc-openapi-starter-webmvc-ui.version>2.0.2</springdoc-openapi-starter-webmvc-ui.version>
         <org.mapstruct.version>1.5.3.Final</org.mapstruct.version>
         <skip.unit.tests>true</skip.unit.tests>
+        <springfox-core.version>3.0.0</springfox-core.version>
+        <io.github.classgraph.classgraph.version>4.8.153</io.github.classgraph.classgraph.version>
     </properties>
 
     <dependencies>
@@ -40,10 +42,26 @@
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-core</artifactId>
+            <version>${springfox-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-spring-web</artifactId>
+            <version>${springfox-core.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>${springdoc-openapi-ui.version}</version>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.classgraph</groupId>
+            <artifactId>classgraph</artifactId>
+            <version>${io.github.classgraph.classgraph.version}</version>
         </dependency>
 
         <dependency>
@@ -94,6 +112,8 @@
             <artifactId>spring-kafka-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+
     </dependencies>
 
     <build>
