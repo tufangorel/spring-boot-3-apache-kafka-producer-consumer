@@ -14,6 +14,13 @@ public class WebConfig implements WebMvcConfigurer {
     private CurrentRequestThreadInterceptor currentRequestThreadInterceptor;
 
     @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry
+                .addResourceHandler("swagger-ui.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
+    }
+
+    @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**");
     }
@@ -28,4 +35,5 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(currentRequestThreadInterceptor);
     }
+
 }

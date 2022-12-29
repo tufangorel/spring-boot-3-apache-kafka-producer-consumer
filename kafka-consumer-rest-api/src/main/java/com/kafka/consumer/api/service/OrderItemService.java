@@ -3,6 +3,7 @@ package com.kafka.consumer.api.service;
 
 import com.kafka.consumer.api.model.OrderItem;
 import com.kafka.consumer.api.repository.OrderItemRepository;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,13 +14,18 @@ import java.util.Optional;
 public class OrderItemService {
 
     private final OrderItemRepository orderItemRepository;
+    private final KafkaTemplate<String, Object> kafkaTemplate;
 
-    public OrderItemService(OrderItemRepository orderItemRepository) {
+    public OrderItemService(OrderItemRepository orderItemRepository,
+                            KafkaTemplate<String, Object> kafkaTemplate) {
         this.orderItemRepository = orderItemRepository;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     @Transactional
     public OrderItem save(OrderItem orderItem){
+
+        kafkaTemplate.send("orders", orderItem);
         return orderItemRepository.save(orderItem);
     }
 

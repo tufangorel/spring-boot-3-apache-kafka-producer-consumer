@@ -14,9 +14,15 @@ public class SecurityConfig {
         http.csrf().disable();
         http.headers().frameOptions().disable();
 
+//        return http
+//                .requiresChannel(channel ->
+//                        channel.anyRequest().requiresSecure())
+//                .authorizeRequests(authorize ->
+//                        authorize.anyRequest().permitAll())
+//                .csrf().disable()
+//                .build();
+
         return http
-                .requiresChannel(channel ->
-                        channel.anyRequest().requiresSecure())
                 .authorizeRequests(authorize ->
                         authorize.anyRequest().permitAll())
                 .csrf().disable()
