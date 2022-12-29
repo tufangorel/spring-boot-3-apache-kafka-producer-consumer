@@ -3,13 +3,13 @@
 Purpose : <br/>
 1- Send message to Kafka broker topic from kafka-producer-rest-api via kafka-template <br/>
 2- Read message from Kafka broker topic to kafka-consumer-rest-api <br/>
-3- Increase decoupling between microservices.
+3- Decrease coupling between microservices.
 
 ![kafka-producer-consumer](doc/kafka-producer-consumer.png) <br/>
 
 ### Tech Stack
 Java 17 <br/>
-Kafka Broker ( must be installed and started locally at localhost:9092 before executing producer and consumer apis ) <br/>
+Kafka Broker ( must be installed and started at localhost:9092 before starting producer and consumer apis ) <br/>
 H2 Database Engine <br/>
 spring boot <br/>
 spring boot starter data jpa <br/>
