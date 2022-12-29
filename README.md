@@ -9,7 +9,7 @@ Purpose : <br/>
 
 ### Tech Stack
 Java 17 <br/>
-Kafka Broker <br/>
+Kafka Broker ( must be installed and started locally at localhost:9092 before executing producer and consumer apis ) <br/>
 H2 Database Engine <br/>
 spring boot <br/>
 spring boot starter data jpa <br/>
