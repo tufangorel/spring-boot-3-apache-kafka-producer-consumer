@@ -48,4 +48,12 @@ public class OrderItem implements Serializable {
         this.customerOrder = customerOrder;
     }
 
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                ", customerOrder=" + customerOrder +
+                '}';
+    }
 }
