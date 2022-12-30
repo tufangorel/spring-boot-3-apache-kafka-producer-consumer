@@ -23,6 +23,7 @@
         <skip.unit.tests>true</skip.unit.tests>
         <springfox-core.version>3.0.0</springfox-core.version>
         <io.github.classgraph.classgraph.version>4.8.153</io.github.classgraph.classgraph.version>
+        <hibernate-validator.version>8.0.0.Final</hibernate-validator.version>
     </properties>
 
     <dependencies>
@@ -114,6 +115,11 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-validator.version}</version>
+        </dependency>
 
     </dependencies>
 
