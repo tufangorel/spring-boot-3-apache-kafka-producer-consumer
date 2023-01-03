@@ -1,4 +1,4 @@
-package com.kafka.producer.api.config.listener;
+package com.kafka.consumer.api.config.application.listener;
 
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
