@@ -1,7 +1,6 @@
 package com.kafka.consumer.api.config.swagger;
 
 
-import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -10,15 +9,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
 @Configuration
-public class SwaggerConfig {
-
-    @Bean
-    public GroupedOpenApi publicApi() {
-        return GroupedOpenApi.builder()
-                .group("consumer")
-                .pathsToMatch("/**")
-                .build();
-    }
+public class SwaggerConfig  {
 
     @Bean
     public Docket api() {
