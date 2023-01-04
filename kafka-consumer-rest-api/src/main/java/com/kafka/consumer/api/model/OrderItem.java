@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "order_item")
@@ -48,4 +49,25 @@ public class OrderItem implements Serializable {
         this.customerOrder = customerOrder;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderItem orderItem = (OrderItem) o;
+        return quantity == orderItem.quantity && Objects.equals(id, orderItem.id) && Objects.equals(customerOrder, orderItem.customerOrder);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, quantity, customerOrder);
+    }
+
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                ", customerOrder=" + customerOrder +
+                '}';
+    }
 }
