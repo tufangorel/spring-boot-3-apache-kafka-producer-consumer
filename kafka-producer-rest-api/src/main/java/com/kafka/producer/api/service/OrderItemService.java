@@ -20,12 +20,12 @@ public class OrderItemService {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderItemService.class.getName());
 
     private final OrderItemRepository orderItemRepository;
-    private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final KafkaTemplate<String, OrderItem> kafkaOrderItemTemplate;
 
     public OrderItemService(OrderItemRepository orderItemRepository,
-                            KafkaTemplate<String, Object> kafkaTemplate) {
+                            KafkaTemplate<String, OrderItem> kafkaTemplate) {
         this.orderItemRepository = orderItemRepository;
-        this.kafkaTemplate = kafkaTemplate;
+        this.kafkaOrderItemTemplate = kafkaTemplate;
     }
 
     @Transactional
@@ -33,7 +33,7 @@ public class OrderItemService {
 
         OrderItem resultOrderItem = null;
         try {
-            CompletableFuture<SendResult<String, Object>> future = kafkaTemplate.send("orders", orderItem);
+            CompletableFuture<SendResult<String, OrderItem>> future = kafkaOrderItemTemplate.send("orders", orderItem);
             future.whenComplete((result, ex) -> {
                 if (ex == null) {
                     LOGGER.info("The record with key : {}, value : {} is produced successfully to offset {}",
