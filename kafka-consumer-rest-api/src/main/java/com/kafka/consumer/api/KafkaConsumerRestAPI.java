@@ -14,7 +14,6 @@ public class KafkaConsumerRestAPI
 
     public static void main(String[] args) {
         SpringApplication.run(KafkaConsumerRestAPI.class, args);
-        LOGGER.info("Spring Boot application KafkaConsumerRestAPI started!");
     }
 
 }
