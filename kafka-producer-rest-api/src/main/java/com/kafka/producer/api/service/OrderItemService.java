@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -33,7 +34,10 @@ public class OrderItemService {
 
         OrderItem resultOrderItem = null;
         try {
-            CompletableFuture<SendResult<String, OrderItem>> future = kafkaOrderItemTemplate.send("orders", orderItem);
+            UUID UUIDVal = UUID.randomUUID();
+            orderItem.setId(UUIDVal.toString());
+
+            CompletableFuture<SendResult<String, OrderItem>> future = kafkaOrderItemTemplate.send("orders", UUIDVal.toString(), orderItem);
             future.whenComplete((result, ex) -> {
                 if (ex == null) {
                     LOGGER.info("The record with key : {}, value : {} is produced successfully to offset {}",
@@ -55,7 +59,7 @@ public class OrderItemService {
         return resultOrderItem;
     }
 
-    public Optional<OrderItem> findByID(Integer id){
+    public Optional<OrderItem> findByID(String id){
         return orderItemRepository.findById(id);
     }
 
@@ -64,7 +68,7 @@ public class OrderItemService {
     }
 
     @Transactional
-    public void deleteOrderItemByID(Integer id) {
+    public void deleteOrderItemByID(String id) {
         orderItemRepository.deleteById(id);
     }
 }

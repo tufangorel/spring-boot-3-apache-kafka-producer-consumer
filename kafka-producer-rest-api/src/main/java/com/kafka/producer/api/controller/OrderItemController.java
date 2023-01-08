@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @RestController
@@ -56,14 +57,14 @@ public class OrderItemController {
 
     @Operation(summary = "Delete an order item")
     @DeleteMapping(value="/delete/{id}", produces = "application/json")
-    public ResponseEntity<?> delete(@PathVariable Integer id){
+    public ResponseEntity<?> delete(@PathVariable String id){
         orderItemService.deleteOrderItemByID(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Operation(summary = "Update an order item")
     @PutMapping(value = "/update/{id}", produces = "application/json")
-    public ResponseEntity<?> updateOrderItem(@PathVariable Integer id, @RequestBody OrderItem orderItem){
+    public ResponseEntity<?> updateOrderItem(@PathVariable String id, @RequestBody OrderItem orderItem){
         Optional<OrderItem> storedOrderItem = orderItemService.findByID(id);
         storedOrderItem.get().setQuantity(orderItem.getQuantity());
         orderItemService.save(storedOrderItem.get());
