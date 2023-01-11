@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource(value = "classpath:/kafka/kafka-producer-${spring.profiles.active}.properties")
+@PropertySource(value = "classpath:/kafka/kafka-producer-${spring.profiles.active}.properties", ignoreResourceNotFound = true)
 @ConfigurationProperties(prefix = "kafka.producer")
 public class KafkaProducerProperties {
 
