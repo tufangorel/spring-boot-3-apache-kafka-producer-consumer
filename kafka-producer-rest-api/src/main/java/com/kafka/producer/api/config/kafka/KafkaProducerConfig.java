@@ -7,6 +7,7 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
@@ -23,14 +24,17 @@ public class KafkaProducerConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducerConfig.class);
 
+    @Autowired
+    private KafkaProducerProperties kafkaProducerProperties;
+
     @Bean
     public ProducerFactory<String, OrderItem> producerFactory() {
 
         Map<String, Object> configProps = new HashMap<>();
-        configProps.put( ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        configProps.put( ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProducerProperties.getBootstrapServers());
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "com.kafka.producer.api.config.kafka.serializer.OrderItemSerializer");
-        //transaction.timeout.ms = 60000
+
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 

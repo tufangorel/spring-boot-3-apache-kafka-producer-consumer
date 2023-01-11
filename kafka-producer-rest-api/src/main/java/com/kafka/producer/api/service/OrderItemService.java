@@ -1,10 +1,12 @@
 package com.kafka.producer.api.service;
 
 
+import com.kafka.producer.api.config.kafka.KafkaProducerProperties;
 import com.kafka.producer.api.model.OrderItem;
 import com.kafka.producer.api.repository.OrderItemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
@@ -20,13 +22,16 @@ public class OrderItemService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderItemService.class.getName());
 
+    private KafkaProducerProperties kafkaProducerProperties;
+
     private final OrderItemRepository orderItemRepository;
     private final KafkaTemplate<String, OrderItem> kafkaOrderItemTemplate;
 
     public OrderItemService(OrderItemRepository orderItemRepository,
-                            KafkaTemplate<String, OrderItem> kafkaTemplate) {
+                            KafkaTemplate<String, OrderItem> kafkaTemplate, KafkaProducerProperties kafkaProducerProperties) {
         this.orderItemRepository = orderItemRepository;
         this.kafkaOrderItemTemplate = kafkaTemplate;
+        this.kafkaProducerProperties = kafkaProducerProperties;
     }
 
     @Transactional
@@ -36,8 +41,9 @@ public class OrderItemService {
         try {
             UUID UUIDVal = UUID.randomUUID();
             orderItem.setId(UUIDVal.toString());
+            String topic = kafkaProducerProperties.getTopicName();
 
-            CompletableFuture<SendResult<String, OrderItem>> future = kafkaOrderItemTemplate.send("orders", UUIDVal.toString(), orderItem);
+            CompletableFuture<SendResult<String, OrderItem>> future = kafkaOrderItemTemplate.send(topic, UUIDVal.toString(), orderItem);
             future.whenComplete((result, ex) -> {
                 if (ex == null) {
                     LOGGER.info("The record with key : {}, value : {} is produced successfully to offset {}",
