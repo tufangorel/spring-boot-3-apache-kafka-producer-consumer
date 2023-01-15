@@ -6,7 +6,6 @@ import com.kafka.producer.api.model.OrderItem;
 import com.kafka.producer.api.repository.OrderItemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
@@ -23,14 +22,13 @@ public class OrderItemService {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderItemService.class.getName());
 
     private KafkaProducerProperties kafkaProducerProperties;
-
     private final OrderItemRepository orderItemRepository;
-    private final KafkaTemplate<String, OrderItem> kafkaOrderItemTemplate;
+    private final KafkaTemplate<String, Object> kafkaProducerTemplate;
 
     public OrderItemService(OrderItemRepository orderItemRepository,
-                            KafkaTemplate<String, OrderItem> kafkaTemplate, KafkaProducerProperties kafkaProducerProperties) {
+                            KafkaTemplate<String, Object> kafkaProducerTemplate, KafkaProducerProperties kafkaProducerProperties) {
         this.orderItemRepository = orderItemRepository;
-        this.kafkaOrderItemTemplate = kafkaTemplate;
+        this.kafkaProducerTemplate = kafkaProducerTemplate;
         this.kafkaProducerProperties = kafkaProducerProperties;
     }
 
@@ -43,7 +41,7 @@ public class OrderItemService {
             orderItem.setId(UUIDVal.toString());
             String topic = kafkaProducerProperties.getTopicName();
 
-            CompletableFuture<SendResult<String, OrderItem>> future = kafkaOrderItemTemplate.send(topic, UUIDVal.toString(), orderItem);
+            CompletableFuture<SendResult<String, Object>> future = kafkaProducerTemplate.send(topic, orderItem.getId(), orderItem);
             future.whenComplete((result, ex) -> {
                 if (ex == null) {
                     LOGGER.info("The record with key : {}, value : {} is produced successfully to offset {}",
